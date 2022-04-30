@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CabInvoiceGenerator
 {
-    public enum RideType 
+    // Differentiating between the Normal and the premium class 
+    public enum RideType
     {
         NORMAL, PREMIUM
     }

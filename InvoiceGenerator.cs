@@ -9,28 +9,39 @@ namespace CabInvoiceGenerator
     public class InvoiceGenerator
     {
         RideType rideType;
+        private RideRepository rideRepository;
 
         private readonly double MINIMUM_COST_PER_KM;
         private readonly int COST_PER_TIME;
-        private readonly double MINIMUM_FAIR;
+        private readonly double MINIMUM_FARE;
+
+
         public InvoiceGenerator(RideType rideType)
         {
             this.rideType = rideType;
-
+            this.rideRepository = new RideRepository();
             try
             {
-                if (rideType.Equals(RideType.NORMAL))
+                if (rideType.Equals(RideType.PREMIUM))
                 {
-                    MINIMUM_COST_PER_KM = 10;
-                    COST_PER_TIME = 1;
-                    MINIMUM_FAIR = 5;
+                    this.MINIMUM_COST_PER_KM = 15;
+                    this.COST_PER_TIME = 2;
+                    this.MINIMUM_FARE = 20;
+                }
+                else if (rideType.Equals(RideType.NORMAL))
+                {
+                    this.MINIMUM_COST_PER_KM = 10;
+                    this.COST_PER_TIME = 1;
+                    this.MINIMUM_FARE = 5;
                 }
             }
-            catch (InvoiceException)
+            catch
             {
-                throw new InvoiceException(InvoiceException.ExceptionType.INVALID_RIDE_TYPE, "Invalid ride type");
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_RIDE_TYPE, "Invalid ride type");
             }
         }
+
+
         public double CalculateFare(double distance, int time)
         {
             double totalFare = 0;
@@ -42,18 +53,19 @@ namespace CabInvoiceGenerator
             {
                 if (rideType.Equals(null))
                 {
-                    throw new InvoiceException(InvoiceException.ExceptionType.INVALID_RIDE_TYPE, "Invalid ride type");
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_RIDE_TYPE, "Invalid ride type");
+
                 }
                 if (distance <= 0)
                 {
-                    throw new InvoiceException(InvoiceException.ExceptionType.INVALID_DISTANCE, "Invalid distance");
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_DISTANCE, "Invalid distance");
                 }
-                if (time < 0)
+                if (distance < 0)
                 {
-                    throw new InvoiceException(InvoiceException.ExceptionType.INVALID_TIME, "Invalid Time");
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_TIME, "Invalid time");
                 }
             }
-            return totalFare;
+            return Math.Max(totalFare, MINIMUM_FARE);
         }
     }
 }
