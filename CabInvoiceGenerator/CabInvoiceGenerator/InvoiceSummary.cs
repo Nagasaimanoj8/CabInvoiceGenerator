@@ -21,7 +21,7 @@ namespace CabInvoiceGenerator
         {
             this.numberOfRides = numberOfRides;
             this.totalFare = totalFare;
-            this.averageFare = this.totalFare / this.numberOfRides;
+            this.averageFare = totalFare / numberOfRides;
         }
 
         /// <summary>

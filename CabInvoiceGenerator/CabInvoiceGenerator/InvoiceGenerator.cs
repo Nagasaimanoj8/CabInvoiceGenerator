@@ -51,7 +51,14 @@ namespace CabInvoiceGenerator
                 }
                 if (distance <= 0)
                 {
-                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_DISTANCE, "Invalid distance");
+                    try
+                    {
+                        throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_DISTANCE, "Invalid distance");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
                 if (time <= 0)
                 {
@@ -63,9 +70,10 @@ namespace CabInvoiceGenerator
             {
                 Console.WriteLine(ex);
             }
+
             return Math.Max(totalFare, MINIMUM_FARE);
         }
-        public double CalculateFare(Ride[] rides)
+        public InvoiceSummary CalculateFare(Ride[] rides)
         {
             double totalFare = 0;
             try
@@ -83,7 +91,8 @@ namespace CabInvoiceGenerator
                 }
             }
             double res = Math.Max(totalFare, MINIMUM_FARE);
-            return res;
+            return new InvoiceSummary(rides.Length, res);
+            //return res;
         }
     }
 }

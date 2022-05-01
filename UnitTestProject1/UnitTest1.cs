@@ -32,17 +32,17 @@ namespace CabInvoiceTestProject
         [TestCategory("Fare")]
         public void GivenMultipleRidesShouldeturnAggregateTotalFare()
         {
-
+            //double expected =60;
             //Arrange
             Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 1) };
             InvoiceGenerator invoiceGenerator = new InvoiceGenerator(RideType.PREMIUM);
-            double expected = 60;
+            InvoiceSummary expected = new InvoiceSummary(rides.Length, 60);
             //Generating Summary for rides
             //Act
-            double actual = invoiceGenerator.CalculateFare(rides);
+            InvoiceSummary actual = invoiceGenerator.CalculateFare(rides);
             //Asserting values
-            Assert.AreEqual(expected, actual);
+            // Assert.AreEqual(expected, actual);
+            expected.Equals(actual);
         }
     }
 }
-
