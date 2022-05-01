@@ -5,7 +5,7 @@ using CabInvoiceGenerator;
 namespace CabInvoiceTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class CabInvoiceUnitTest
     {
         InvoiceGenerator invoiceGenerator = null;
 
@@ -28,5 +28,21 @@ namespace CabInvoiceTestProject
             Assert.AreEqual(expectedFare, actualFare);
         }
 
+        [TestMethod]
+        [TestCategory("Fare")]
+        public void GivenMultipleRidesShouldeturnAggregateTotalFare()
+        {
+
+            //Arrange
+            Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 1) };
+            InvoiceGenerator invoiceGenerator = new InvoiceGenerator(RideType.PREMIUM);
+            double expected = 60;
+            //Generating Summary for rides
+            //Act
+            double actual = invoiceGenerator.CalculateFare(rides);
+            //Asserting values
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
+

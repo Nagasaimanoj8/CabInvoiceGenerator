@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 
 namespace CabInvoiceGenerator
 {
-       public class RideRepository
+    public class RideRepository
     {
         Dictionary<string, List<Ride>> userRides = null;
-
-
         public RideRepository()
         {
             this.userRides = new Dictionary<string, List<Ride>>();
         }
-
-
         public void AddRides(string userId, Ride[] rides)
         {
             bool rideList = this.userRides.ContainsKey(userId);
@@ -34,8 +30,6 @@ namespace CabInvoiceGenerator
                 throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDE, "Rides are null");
             }
         }
-
-
         public Ride[] GetRides(string userId)
         {
             try
@@ -49,4 +43,5 @@ namespace CabInvoiceGenerator
         }
     }
 }
+
 
