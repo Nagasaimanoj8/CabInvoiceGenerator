@@ -18,7 +18,8 @@ namespace CabInvoiceGenerator
             INVALID_TIME,
             INVALID_RIDES,
             NULL_RIDE,
-            INVALID_USER_ID
+            INVALID_USER_ID,
+            NO_RIDES_FOUND
         }
         // Parameterised constructor to override the base class message
         public CabInvoiceException(ExceptionType innerException, string message) : base(message)
